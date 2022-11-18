@@ -1,5 +1,7 @@
 package com.alticelabs.alticciproject.service;
 
+import io.quarkus.cache.CacheResult;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -17,6 +19,7 @@ public class AlticciService {
         }
     }
 
+    @CacheResult(cacheName = "alticci-cache")
     public Integer getAlticciSequenceNumber(Integer n) {
         return alticciNumbers(n);
     }
