@@ -10,12 +10,30 @@ import static org.hamcrest.CoreMatchers.is;
 class AlticciResourceTest {
 
     @Test
-    void testHelloEndpoint() {
+    void testAlticciOneEndpoint() {
         given()
-          .when().get("/alticci/1")
+          .when().get("/alticci/0")
           .then()
              .statusCode(200)
-             .body(is("1"));
+             .body(is("0"));
+    }
+
+    @Test
+    void testAlticciTwoEndpoint() {
+        given()
+                .when().get("/alticci/1")
+                .then()
+                .statusCode(200)
+                .body(is("1"));
+    }
+
+    @Test
+    void testAlticciTreeEndpoint() {
+        given()
+                .when().get("/alticci/2")
+                .then()
+                .statusCode(200)
+                .body(is("1"));
     }
 
 }
