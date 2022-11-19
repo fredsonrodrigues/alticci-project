@@ -8,15 +8,19 @@ import javax.enterprise.context.ApplicationScoped;
 public class AlticciService {
 
     private Integer alticciNumbers(Integer n) {
-        if (n < 2) {
-            return n;
+        int[] f = new int[n+3];
+        int i;
+
+        f[0] = 0;
+        f[1] = 1;
+        f[2] = 1;
+
+        for (i = 3; i <= n; i++)
+        {
+            f[i] = f[i-3] + f[i-2];
         }
-        else if (n == 2) {
-            return 1;
-        }
-        else {
-            return alticciNumbers(n - 3) + alticciNumbers(n - 2);
-        }
+
+        return f[n];
     }
 
     @CacheResult(cacheName = "alticci-cache")
