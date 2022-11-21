@@ -1,0 +1,1 @@
+mvnw install -Dquarkus.container-image.build=true && docker run -d --name alticci-api -p 8080:8080 alitectec/alticci-project:1.0.0-SNAPSHOT
