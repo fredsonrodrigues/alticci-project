@@ -15,7 +15,7 @@ class AlticciResourceTest {
           .when().get("/alticci/0")
           .then()
              .statusCode(200)
-             .body(is("0"));
+                .body("value", is(0), "source", is("result from cache"));
     }
 
     @Test
@@ -24,16 +24,16 @@ class AlticciResourceTest {
                 .when().get("/alticci/1")
                 .then()
                 .statusCode(200)
-                .body(is("1"));
+                .body("value", is(1), "source", is("result from cache"));
     }
 
     @Test
     void testAlticciTreeEndpoint() {
         given()
-                .when().get("/alticci/2")
+                .when().get("/alticci/5")
                 .then()
                 .statusCode(200)
-                .body(is("1"));
+                .body("value", is(2), "source", is("result from function"));
     }
 
 }

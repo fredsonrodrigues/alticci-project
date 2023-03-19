@@ -1,30 +1,45 @@
 package com.alticelabs.alticciproject.service;
 
-import io.quarkus.cache.CacheResult;
+import com.alticelabs.alticciproject.model.AlticciResponse;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.HashMap;
 
 @ApplicationScoped
 public class AlticciService {
 
-    private Integer alticciNumbers(Integer n) {
-        int[] f = new int[n+3];
-        int i;
+    private final HashMap<Integer, Integer> alticciSequence = new HashMap<>();
 
-        f[0] = 0;
-        f[1] = 1;
-        f[2] = 1;
-
-        for (i = 3; i <= n; i++)
-        {
-            f[i] = f[i-3] + f[i-2];
-        }
-
-        return f[n];
+    public AlticciService() {
+        alticciSequence.put(0,0);
+        alticciSequence.put(1,1);
+        alticciSequence.put(2,1);
     }
-
-    @CacheResult(cacheName = "alticci-cache")
-    public Integer getAlticciSequenceNumber(Integer n) {
-        return alticciNumbers(n);
+    private Integer alticciNumbers(Integer n) {
+        int a = 0;
+        int b = 1;
+        int c = 1;
+        int d = 0;
+        for (int i = 3; i <= n; i++) {
+            d = a + b;
+            a = b;
+            b = c;
+            c = d;
+        }
+        return d;
+    }
+    public AlticciResponse getAlticciSequenceNumber(Integer n) {
+        AlticciResponse response = new AlticciResponse();
+        if (alticciSequence.containsKey(n)) {
+            response.setValue(alticciSequence.get(n));
+            response.setSource("result from cache");
+        } else {
+            int newValue = alticciNumbers(n);
+            alticciSequence.put(n, newValue);
+            response.setValue(newValue);
+            response.setSource("result from function");
+        }
+        return response;
     }
 }
+
